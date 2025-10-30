@@ -78,30 +78,86 @@ function exHanoi_1(start, aux, end, n) {
         hanoi(aux,start,end,6*n-3);
     }
 }
-    
+function exHanoi_2(A, B, C, D, n) {
+    hanoi(A,B,D,n);
+    hanoi(C,B,A,n);
+    hanoi(D,B,C,n);
+}
 
 function exhanoi_3(A, B, C, n) {
-    if ( n === 1){
+    if (n===1) {
         moves.push([A,C]);
         moves.push([B,A]);
         moves.push([B,C]);
         moves.push([A,C]);
+    }
+    else{
+        exhanoi_3(A,B,C,n-1);
+        hanoi(C,A,B,3*(n-1));
+        moves.push([A,C]);
+        hanoi(B,A,C,3*n-1);
 
     }
-
+    
 }
 
-// before coding read about the extra rules for this ExHanoi
 function exhanoi_4(A, B, C, D, n) {
-    alert("your function is not complete")
-    return
-
+    if(n == 1){
+        moves.push([A,C]);
+        return;
+    }
+    else{
+        exhanoi_4(A,B,D,C,n-1);
+        moves.push([A,C]);
+        exhanoi_4(D,C,A,B,n-1);
+        exhanoi_4(A,B,C,D,n-1);
+    }
+}
+function adjustant_hanoi(A,B,C,n) {
+    if(n==1) {
+        moves.push([A,B]);
+        moves.push([B,C]);
+    }
+    else {
+        adjustant_hanoi(A,B,C,n-1);
+        moves.push([A,B]);
+        adjustant_hanoi(C,B,A,n-1);
+        moves.push([B,C]);
+        adjustant_hanoi(A,B,C,n-1);
+    }
 }
 
-// before coding read about the extra rules for this ExHanoi
+function adjustant_hanoi2(A,B,C,n){
+    if(n==1) {
+        moves.push([A,B])
+    }
+    else {
+        adjustant_hanoi(A,B,C,n-1);
+        moves.push([A,B]);
+        adjustant_hanoi2(C,B,A,n-1);
+    }
+}
+
+
+
+
 function exhanoi_5(A, B, C, D, n) {
-    alert("your function is not complete")
-    return
+    if (n <= 0 ) {
+        return;
+    }
+    if(n==1){
+        adjustant_hanoi2(C,B,A,3);
+        moves.push([A,D]);
+        moves.push([D,C]);
+        adjustant_hanoi2(B,C,D,5)
+    }
+    else {
+        exhanoi_5(A,B,C,D,n-1);
+        adjustant_hanoi2(C,B,A,6*n-3);
+        moves.push([A,D]);
+        moves.push([D,C]);
+        adjustant_hanoi2(B,C,D,6*n-1)
+    }
 
 }
 
